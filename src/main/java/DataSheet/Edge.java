@@ -7,10 +7,7 @@ public class Edge {
     Point point2;
     Node triangular1;
     Node triangular2;
-//  Todo: remove
-    public Edge(){
 
-    }
 
     public Edge(Point point1, Point point2) {
         this.point1 = point1;

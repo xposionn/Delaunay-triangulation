@@ -13,14 +13,19 @@ public class Graph {
 
     public Node findTriangular(Point p){
     	Node current = root;
+    	boolean found = false;
     	while (!current.isLeaf()) {
     		for (Node child : current.getChilds()) {
     			if (child.isPointInside(p)) {
     				current = child;
+    				found = true;
     				break;
     			}
     		}
-    		return null; //should happen if the point outside the external triangular
+    		if(!found)
+    			return null; //should happen if the point outside the external triangular
+
+			return current;
     	}
         return current;
     }

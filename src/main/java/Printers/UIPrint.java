@@ -12,7 +12,7 @@ public class UIPrint {
     public static void print(List<Triangular> triangulars){
         Set<Edge> set = new HashSet<>();
         for(Triangular t:triangulars){
-//            set.addAll(t.getAllEdges());
+            set.addAll(t.getEdges());
         }
 
         Runnable runnable = new Runnable () {

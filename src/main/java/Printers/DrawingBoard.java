@@ -9,8 +9,8 @@ import java.util.Set;
 
 public class DrawingBoard extends JPanel {
 
-    private static final int WIDTH = 400;
-    private static final int HEIGHT = 300;
+    private static final int WIDTH = 800;
+    private static final int HEIGHT = 600;
     private static Set<Edge> edgeList;
 
 
@@ -31,7 +31,7 @@ public class DrawingBoard extends JPanel {
 
         g.setColor(Color.BLUE);
         for(Edge edge:edgeList){
-            g.drawLine(edge.getPoint1().getX(),edge.getPoint1().getY(),edge.getPoint2().getX(),edge.getPoint2().getY());
+            g.drawLine(edge.getPoint1().getX()/10,edge.getPoint1().getY()/10,edge.getPoint2().getX()/10,edge.getPoint2().getY()/10);
         }
     }
 }

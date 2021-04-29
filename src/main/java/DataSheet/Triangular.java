@@ -2,6 +2,7 @@ package DataSheet;
 
 import java.util.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Triangular {
 
@@ -22,13 +23,13 @@ public class Triangular {
     }
 
     public List<Point> getPoints() {
-        List<Point> points = new ArrayList<>();
+        Set<Point> points = new HashSet<>();
         for (Edge edge : edges) {
             points.add(edge.getPoint1());
             points.add(edge.getPoint2());
         }
 
-        return points;
+        return new ArrayList<>(points);
     }
 
     public Edge getEdgeByTwoPoints(Point p1, Point p2) {
