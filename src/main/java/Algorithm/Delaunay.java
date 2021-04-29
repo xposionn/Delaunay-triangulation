@@ -24,6 +24,7 @@ public class Delaunay {
         List<Node> triangulars = Handler.getTriangularsByPoint(triangular, p);
         triangular.setChilds(triangulars);
         //TODO: why the Node in the pair is triangular? should it be some child?
+        // are we sure we need to check the new edges? not the existed ?
         edgesToBeChecked.addAll(triangular.getEdges().stream().map(e -> new Pair<Edge, Node>(e, triangular)).collect(Collectors.toList()));
         while (!edgesToBeChecked.isEmpty()) {
         	Pair<Edge, Node> edge = edgesToBeChecked.poll();
