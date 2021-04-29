@@ -13,7 +13,13 @@ public class Main {
         List<String> data = FileLoader.readFile("D:\\Study\\Computational Geometry\\Delaunay-triangulation\\src\\examples\\input1.txt");
         DataContainer data1 = new DataContainer(data);
         System.out.println(data1);
-        Triangular triangular = new Triangular(new HalfEdge());
+
+        //First Triangular.
+        Edge a = new Edge();
+        Edge b = new Edge();
+        Edge c = new Edge();
+        Triangular triangular = new Triangular(a,b,c);
+
         Delaunay delaunay = new Delaunay(triangular);
         for(Point point:data1.getListOfPoints()){
             delaunay.insertPoint(point);

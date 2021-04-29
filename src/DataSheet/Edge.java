@@ -5,10 +5,16 @@ import java.util.Objects;
 public class Edge {
     Point point1;
     Point point2;
+    Triangular triangular1;
+    Triangular triangular2;
+//  Todo: remove
+    public Edge(){
 
-    public Edge(Point point1, Point p2){
+    }
+
+    public Edge(Point point1, Point point2) {
         this.point1 = point1;
-        this.point2 = p2;
+        this.point2 = point2;
     }
 
     @Override
@@ -30,5 +36,19 @@ public class Edge {
 
     public Point getPoint2() {
         return point2;
+    }
+
+    public void setTriangular1(Triangular triangular1) {
+        this.triangular1 = triangular1;
+    }
+
+    public void setTriangular2(Triangular triangular2) {
+        this.triangular2 = triangular2;
+    }
+
+
+    //Todo: replace from to to.
+    public void replace(Triangular from, Triangular to) {
+
     }
 }

@@ -10,6 +10,7 @@ public class Graph {
         this.root = new Node(root);
     }
 
+    //Todo: find triangular
     public Node findTriangular(Point p){
 
         return null;

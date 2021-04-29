@@ -23,4 +23,12 @@ public class Node extends Triangular{
     public Triangular getTriangular() {
         return this;
     }
+
+    public void setChilds(List<Node> childs) {
+        this.childs = childs;
+    }
+
+    public List<Node> getChilds() {
+        return childs;
+    }
 }
