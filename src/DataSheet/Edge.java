@@ -62,9 +62,10 @@ public class Edge {
         this.triangular2 = triangular2;
     }
 
-
-    //Todo: replace from to to.
-    public void replace(Triangular from, Triangular to) {
-
+    public void replace(Node from, Node to) {
+    	if (from == getTriangular1())
+    		setTriangular1(to);
+    	else
+    		setTriangular2(to);
     }
 }

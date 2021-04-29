@@ -1,7 +1,8 @@
 package DataSheet;
 
-import java.awt.*;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class Graph {
     Node root;
@@ -25,6 +26,18 @@ public class Graph {
     }
 
     public ArrayList<Node> getAllLeafs(){
-        return null;
+    	if (root == null)
+    		return null;
+        ArrayList<Node> leafsList = new ArrayList<>();
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+        	Node next = queue.poll();
+        	if (next.isLeaf())
+        		leafsList.add(next);
+        	else
+        		queue.addAll(next.getChilds());
+        }
+    	return leafsList;
     }
 }
