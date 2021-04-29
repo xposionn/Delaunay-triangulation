@@ -45,9 +45,6 @@ public class Delaunay {
 
 
     private Edge swapIfNeeded(Edge edge) {
-    	if (!swapIsNeeded(edge))
-    		return null;
-    	
     	Point northPoint = edge.getPoint1();
     	Point southPoint = edge.getPoint2();
     	Node eastNode = edge.getNode1();
@@ -66,6 +63,8 @@ public class Delaunay {
         	if (point != northPoint && point != southPoint)
         		westPoint = point;
         }
+    	if (!isInCircle(northPoint, eastPoint, southPoint, westPoint))
+    		return null;
         
         Edge newEdge = new Edge(eastPoint, westPoint);
         Node northNode = new Node(new Triangular(newEdge, eastNode.getEdgeByTwoPoints(northPoint, eastPoint), westNode.getEdgeByTwoPoints(northPoint, westPoint)));
@@ -75,9 +74,10 @@ public class Delaunay {
         return newEdge;
     }
 
-    private boolean swapIsNeeded(Edge edge) {
-        //Todo: check if swap is needed
-        return true;
+    // Check if point is in circle of the triangular with the following 3 vertices 
+    private boolean isInCircle(Point vertex1, Point vertex2, Point vertex3, Point point) {
+        int detM = Handler.determinantMMatrix(vertex1, vertex2, vertex3, point);
+        return (detM > 0);
     }
 
     public List<Triangular> getAllLeafs() {

@@ -8,7 +8,6 @@ import DataSheet.Triangular;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Handler {
@@ -56,6 +55,23 @@ public class Handler {
 
     public List<Triangular> getTriangularFromNodes(List<Node> nodes) {
         return nodes.stream().map(Node::getTriangular).collect(Collectors.toList());
+    }
+    
+    public static int determinantMMatrix(Point x1, Point x2, Point x3, Point x4) {
+    	int[] r1 = {x1.getX(), x1.getY(), x1.getX()*x1.getX() + x1.getY()*x1.getY()};
+    	int[] r2 = {x1.getX(), x1.getY(), x1.getX()*x1.getX() + x1.getY()*x1.getY()};
+    	int[] r3 = {x1.getX(), x1.getY(), x1.getX()*x1.getX() + x1.getY()*x1.getY()};
+    	int[] r4 = {x1.getX(), x1.getY(), x1.getX()*x1.getX() + x1.getY()*x1.getY()};
+    	return determinant3(r2, r3, r4)
+    			- determinant3(r1, r3, r4)
+    			+ determinant3(r1, r2, r4)
+    			- determinant3(r1, r2, r3);
+    }
+    
+    private static int determinant3(int[] r1, int[]r2, int[]r3) {
+    	 return r1[0]*((r2[1]*r3[2])-(r3[1]*r2[2]))
+    			 - r1[1]*((r1[1]*r3[2])-(r3[0]*r2[2]))
+    			 + r1[2]*((r2[0]*r3[1])-(r2[1]*r3[0]));
     }
 
 }
