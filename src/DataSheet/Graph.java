@@ -10,10 +10,18 @@ public class Graph {
         this.root = new Node(root);
     }
 
-    //Todo: find triangular
     public Node findTriangular(Point p){
-
-        return null;
+    	Node current = root;
+    	while (!current.isLeaf()) {
+    		for (Node child : current.getChilds()) {
+    			if (child.isPointInside(p)) {
+    				current = child;
+    				break;
+    			}
+    		}
+    		return null; //should happen if the point outside the external triangular
+    	}
+        return current;
     }
 
     public ArrayList<Node> getAllLeafs(){

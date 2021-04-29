@@ -45,7 +45,7 @@ public class Handler {
         return new ArrayList<>(Arrays.asList(triangular0,triangular1,triangular2));
     }
 
-    private static Point getCutPoint(Edge a, Edge b) {
+    public static Point getCutPoint(Edge a, Edge b) {
         List<Point> aPoints = new ArrayList<>(Arrays.asList(a.getPoint1(), a.getPoint2()));
         if (aPoints.contains(b.getPoint1()))
         	return b.getPoint1();

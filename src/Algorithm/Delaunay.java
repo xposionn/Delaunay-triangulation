@@ -4,6 +4,7 @@ import DataSheet.*;
 import Handlers.Handler;
 import javafx.util.Pair;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -15,7 +16,7 @@ public class Delaunay {
 
 
     public Delaunay(Triangular t) {
-        Graph g = new Graph(t);
+        g = new Graph(t);
         edgesToBeChecked = new LinkedList<>();
     }
 
@@ -23,12 +24,23 @@ public class Delaunay {
         Node triangular = g.findTriangular(p);
         List<Node> triangulars = Handler.getTriangularsByPoint(triangular, p);
         triangular.setChilds(triangulars);
+        //TODO: why the Node in the pair is triangular? should it be some child?
         edgesToBeChecked.addAll(triangular.getEdges().stream().map(e -> new Pair<Edge, Node>(e, triangular)).collect(Collectors.toList()));
         while (!edgesToBeChecked.isEmpty()) {
         	Pair<Edge, Node> edge = edgesToBeChecked.poll();
             Edge newEdge = swapIfNeeded(edge.getKey());
             if (newEdge != null) {
-            	edge.getKey().getTriangular1();
+            	Node northNode = newEdge.getNode1();
+            	Node southNode = newEdge.getNode2();
+            	Node westNode = (edge.getKey().getNode1() == edge.getValue() ? edge.getKey().getNode2() : edge.getKey().getNode1());
+            	for (Edge someWestEdge : westNode.getEdges()) {
+            		if (someWestEdge == edge.getKey())
+            			continue;
+            		if (northNode.getEdges().contains(someWestEdge))
+            			edgesToBeChecked.add(new Pair<Edge, Node>(someWestEdge, northNode));
+            		else if (southNode.getEdges().contains(someWestEdge))
+            			edgesToBeChecked.add(new Pair<Edge, Node>(someWestEdge, southNode));
+            	}
             }
         }
 
@@ -37,12 +49,34 @@ public class Delaunay {
 
 
     private Edge swapIfNeeded(Edge edge) {
-        if (swapIsNeeded(edge)) {
-            //Todo:add the new edges.
-//            edgesToBeChecked.add()
-//            edgesToBeChecked.add()
+    	if (!swapIsNeeded(edge))
+    		return null;
+    	
+    	Point northPoint = edge.getPoint1();
+    	Point southPoint = edge.getPoint2();
+    	Node eastNode = edge.getNode1();
+        Node westNode = edge.getNode2();
+        
+        List<Point> eastTraingularPoints = eastNode.getPoints();
+        Point eastPoint = null;
+        for (Point point : eastTraingularPoints) {
+        	if (point != northPoint && point != southPoint)
+        		eastPoint = point;
         }
-        return null;
+        
+        List<Point> westTraingularPoints = westNode.getPoints();
+        Point westPoint = null;
+        for (Point point : westTraingularPoints) {
+        	if (point != northPoint && point != southPoint)
+        		westPoint = point;
+        }
+        
+        Edge newEdge = new Edge(eastPoint, westPoint);
+        Node northNode = new Node(new Triangular(newEdge, eastNode.getEdgeByTwoPoints(northPoint, eastPoint), westNode.getEdgeByTwoPoints(northPoint, westPoint)));
+        Node southNode = new Node(new Triangular(newEdge, eastNode.getEdgeByTwoPoints(southPoint, eastPoint), westNode.getEdgeByTwoPoints(southPoint, westPoint)));
+        newEdge.setTriangular1(northNode);
+        newEdge.setTriangular2(southNode);
+        return newEdge;
     }
 
     private boolean swapIsNeeded(Edge edge) {
