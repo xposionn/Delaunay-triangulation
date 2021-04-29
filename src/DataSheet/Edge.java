@@ -5,8 +5,8 @@ import java.util.Objects;
 public class Edge {
     Point point1;
     Point point2;
-    Triangular triangular1;
-    Triangular triangular2;
+    Node triangular1;
+    Node triangular2;
 //  Todo: remove
     public Edge(){
 
@@ -17,7 +17,23 @@ public class Edge {
         this.point2 = point2;
     }
 
-    @Override
+    public Node getNode1() {
+		return triangular1;
+	}
+
+	public Node getNode2() {
+		return triangular2;
+	}
+
+	public Triangular getTriangular1() {
+		return triangular1.getTriangular();
+	}
+
+	public Triangular getTriangular2() {
+		return triangular2.getTriangular();
+	}
+
+	@Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -38,11 +54,11 @@ public class Edge {
         return point2;
     }
 
-    public void setTriangular1(Triangular triangular1) {
+    public void setTriangular1(Node triangular1) {
         this.triangular1 = triangular1;
     }
 
-    public void setTriangular2(Triangular triangular2) {
+    public void setTriangular2(Node triangular2) {
         this.triangular2 = triangular2;
     }
 

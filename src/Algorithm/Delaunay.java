@@ -2,6 +2,7 @@ package Algorithm;
 
 import DataSheet.*;
 import Handlers.Handler;
+import javafx.util.Pair;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.stream.Collectors;
 
 public class Delaunay {
     Graph g;
-    Queue<Edge> edgesToBeChecked;
+    Queue<Pair<Edge, Node>> edgesToBeChecked;
 
 
     public Delaunay(Triangular t) {
@@ -19,27 +20,29 @@ public class Delaunay {
     }
 
     public void insertPoint(Point p) {
-        Node t = g.findTriangular(p);
-        Triangular triangular = t.getTriangular();
-        List<Triangular> triangulars = Handler.getTriangularsByPoint(triangular, p);
-        t.setChilds(triangulars.stream().map(Node::new).collect(Collectors.toList()));
-        edgesToBeChecked.addAll(t.getEdges());
+        Node triangular = g.findTriangular(p);
+        List<Node> triangulars = Handler.getTriangularsByPoint(triangular, p);
+        triangular.setChilds(triangulars);
+        edgesToBeChecked.addAll(triangular.getEdges().stream().map(e -> new Pair<Edge, Node>(e, triangular)).collect(Collectors.toList()));
         while (!edgesToBeChecked.isEmpty()) {
-            Edge edge = edgesToBeChecked.poll();
-            swapIfNeeded(edge);
-
+        	Pair<Edge, Node> edge = edgesToBeChecked.poll();
+            Edge newEdge = swapIfNeeded(edge.getKey());
+            if (newEdge != null) {
+            	edge.getKey().getTriangular1();
+            }
         }
 
 
     }
 
 
-    private void swapIfNeeded(Edge edge) {
+    private Edge swapIfNeeded(Edge edge) {
         if (swapIsNeeded(edge)) {
             //Todo:add the new edges.
 //            edgesToBeChecked.add()
 //            edgesToBeChecked.add()
         }
+        return null;
     }
 
     private boolean swapIsNeeded(Edge edge) {

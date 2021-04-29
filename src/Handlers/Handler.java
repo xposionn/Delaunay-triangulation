@@ -12,13 +12,11 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Handler {
-    public static List<Triangular> getTriangularsByPoint(Triangular triangular, Point p) {
-        List<Point> points = triangular.getPoints();
+    public static List<Node> getTriangularsByPoint(Node triangular, Point p) {
 
-        List<Triangular> triangulars = new ArrayList<>();
-        Triangular triangular0;
-        Triangular triangular1;
-        Triangular triangular2;
+        Node triangular0;
+        Node triangular1;
+        Node triangular2;
 
         List<Edge> edges = triangular.getEdges();
         Point cutPoint01 = Handler.getCutPoint(edges.get(0),edges.get(1));
@@ -29,9 +27,9 @@ public class Handler {
         Edge b = new Edge(p, cutPoint02);
         Edge c = new Edge(p, cutPoint12);
 
-        triangular0 = new Triangular(a,b,edges.get(0));
-        triangular1 = new Triangular(a,c,edges.get(1));
-        triangular2 = new Triangular(b,c,edges.get(2));
+        triangular0 = new Node(new Triangular(a,b,edges.get(0)));
+        triangular1 = new Node(new Triangular(a,c,edges.get(1)));
+        triangular2 = new Node(new Triangular(b,c,edges.get(2)));
 
         a.setTriangular1(triangular0);
         a.setTriangular2(triangular1);
@@ -45,13 +43,14 @@ public class Handler {
         edges.get(2).replace(triangular,triangular2);
 
         return new ArrayList<>(Arrays.asList(triangular0,triangular1,triangular2));
-
-
-
     }
 
-    //Todo: get the shared point.
     private static Point getCutPoint(Edge a, Edge b) {
+        List<Point> aPoints = new ArrayList<>(Arrays.asList(a.getPoint1(), a.getPoint2()));
+        if (aPoints.contains(b.getPoint1()))
+        	return b.getPoint1();
+        else if (aPoints.contains(b.getPoint2()))
+        	return b.getPoint2();
         return null;
     }
 
