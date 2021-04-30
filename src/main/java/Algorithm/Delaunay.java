@@ -4,9 +4,7 @@ import DataSheet.*;
 import Handlers.Handler;
 import javafx.util.Pair;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Delaunay {
@@ -22,27 +20,53 @@ public class Delaunay {
 
     public void insertPoint(Point p) {
         Node triangular = g.findTriangular(p);
+        Set<Edge> sureEdges = new HashSet<>();
         List<Node> triangulars = Handler.getTriangularsByPoint(triangular, p);
+        Set<Edge> createdEdges = new HashSet<>();
+        for(Triangular triangular1:triangulars){
+            for(Edge edge:triangular1.getEdges()){
+                if(!triangular.getTriangular().getEdges().contains(edge))
+                    createdEdges.add(edge);
+            }
+        }
+        sureEdges.addAll(createdEdges);
         triangular.setChilds(triangulars);
         //TODO: why the Node in the pair is triangular? should it be some child?
         // are we sure we need to check the new edges? not the existed ?
         edgesToBeChecked.addAll(triangular.getEdges().stream().map(e -> new Pair<Edge, Node>(e, triangular)).collect(Collectors.toList()));
         while (!edgesToBeChecked.isEmpty()) {
         	Pair<Edge, Node> edge = edgesToBeChecked.poll();
-        	if(edge.getKey().isExteral()) continue;
+        	if(edge.getKey().isExteral()){
+                sureEdges.contains(edge.getKey());
+        	}
+        	if(sureEdges.contains(edge.getKey()))continue;
             Edge newEdge = swapIfNeeded(edge.getKey());
+            if(sureEdges.contains(newEdge)) continue;
             if (newEdge != null) {
+                sureEdges.add(newEdge);
+                triangular.getChilds().add(newEdge.getNode1());
+                triangular.getChilds().add(newEdge.getNode2());
             	Node northNode = newEdge.getNode1();
             	Node southNode = newEdge.getNode2();
-            	Node westNode = (edge.getKey().getNode1().equals(edge.getValue()) ? edge.getKey().getNode2() : edge.getKey().getNode1());
-            	for (Edge someWestEdge : westNode.getEdges()) {
+            	List<Edge> northEdges = northNode.getEdges();
+            	List<Edge> southEdges = southNode.getEdges();
+            	Set<Pair<Edge,Node>> filteringSet = new HashSet<>();
+            	filteringSet.addAll(northEdges.stream().map(e-> new Pair<Edge,Node>(e,northNode)).collect(Collectors.toList()));
+            	filteringSet.addAll(southEdges.stream().map(e-> new Pair<Edge,Node>(e,southNode)).collect(Collectors.toList()));
+            	for(Edge e:sureEdges){
+                    filteringSet.removeIf(pair -> pair.getKey().equals(e));
+                }
+            	edgesToBeChecked.addAll(new ArrayList<>(filteringSet));
+            	/*for (Edge someWestEdge : westNode.getEdges()) {
             		if (someWestEdge.equals(edge.getKey()))
             			continue;
             		if (northNode.getEdges().contains(someWestEdge))
             			edgesToBeChecked.add(new Pair<Edge, Node>(someWestEdge, northNode));
             		else if (southNode.getEdges().contains(someWestEdge))
             			edgesToBeChecked.add(new Pair<Edge, Node>(someWestEdge, southNode));
-            	}
+            	}*/
+
+
             }
         }
     }

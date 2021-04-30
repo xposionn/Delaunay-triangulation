@@ -40,17 +40,17 @@ public class Edge {
 		return triangular2.getTriangular();
 	}
 
-	@Override
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Edge edge = (Edge) o;
-        return (Objects.equals(point1, edge.point1) && Objects.equals(point2, edge.point2) )|| (Objects.equals(point1, edge.point2) && Objects.equals(point2, edge.point1));
+        return Objects.equals(point1, edge.point1) && Objects.equals(point2, edge.point2);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(point1)+Objects.hashCode(point2);
+        return Objects.hash(point1, point2);
     }
 
     public Point getPoint1() {
