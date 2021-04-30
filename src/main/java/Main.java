@@ -30,9 +30,9 @@ public class Main {
         for (Point point : data1.getListOfPoints()) {
             i++;
             delaunay.insertPoint(point);
-//            if (i == 3) {
-//                break;
-//            }
+            if (i == 3) {
+                break;
+            }
 
 
 

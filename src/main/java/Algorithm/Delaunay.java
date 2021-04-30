@@ -44,15 +44,15 @@ public class Delaunay {
             if(sureEdges.contains(newEdge)) continue;
             if (newEdge != null) {
                 sureEdges.add(newEdge);
-                triangular.getChilds().add(newEdge.getNode1());
-                triangular.getChilds().add(newEdge.getNode2());
+//                triangular.getChilds().add(newEdge.getNode1());
+//                triangular.getChilds().add(newEdge.getNode2());
             	Node northNode = newEdge.getNode1();
             	Node southNode = newEdge.getNode2();
             	List<Edge> northEdges = northNode.getEdges();
             	List<Edge> southEdges = southNode.getEdges();
             	Set<Pair<Edge,Node>> filteringSet = new HashSet<>();
-            	filteringSet.addAll(northEdges.stream().map(e-> new Pair<Edge,Node>(e,northNode)).collect(Collectors.toList()));
-            	filteringSet.addAll(southEdges.stream().map(e-> new Pair<Edge,Node>(e,southNode)).collect(Collectors.toList()));
+            	filteringSet.addAll(northEdges.stream().map(e-> new Pair<>(e, northNode)).collect(Collectors.toList()));
+            	filteringSet.addAll(southEdges.stream().map(e-> new Pair<>(e, southNode)).collect(Collectors.toList()));
             	for(Edge e:sureEdges){
                     filteringSet.removeIf(pair -> pair.getKey().equals(e));
                 }
