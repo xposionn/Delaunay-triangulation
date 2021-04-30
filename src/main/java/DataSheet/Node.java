@@ -2,6 +2,7 @@ package DataSheet;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Node extends Triangular{
     List<Node> childs;
@@ -32,7 +33,12 @@ public class Node extends Triangular{
         return childs;
     }
 
-
+    @Override
+    public String toString() {
+        return "Node{" +
+                "edges=" + edges +
+                '}';
+    }
 
     private float sign(Point p1, Point p2, Point p3)
     {
@@ -55,5 +61,18 @@ public class Node extends Triangular{
          has_pos = (d1 > 0) || (d2 > 0) || (d3 > 0);
 
         return !(has_neg && has_pos);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Node node = (Node) o;
+        return Objects.equals(childs, node.childs);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(childs);
     }
 }

@@ -7,12 +7,22 @@ public class Edge {
     Point point2;
     Node triangular1;
     Node triangular2;
+    boolean isExteral = false;
 
+    public boolean isExteral() {
+        return isExteral;
+    }
+
+    public void setExteral(boolean exteral) {
+        isExteral = exteral;
+    }
 
     public Edge(Point point1, Point point2) {
         this.point1 = point1;
         this.point2 = point2;
     }
+
+
 
     public Node getNode1() {
 		return triangular1;
@@ -64,5 +74,13 @@ public class Edge {
     		setTriangular1(to);
     	else
     		setTriangular2(to);
+    }
+
+    @Override
+    public String toString() {
+        return "Edge{" +
+                "point1=" + point1 +
+                ", point2=" + point2 +
+                '}';
     }
 }

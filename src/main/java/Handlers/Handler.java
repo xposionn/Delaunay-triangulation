@@ -59,18 +59,18 @@ public class Handler {
     
     public static int determinantMMatrix(Point x1, Point x2, Point x3, Point x4) {
     	int[] r1 = {x1.getX(), x1.getY(), x1.getX()*x1.getX() + x1.getY()*x1.getY()};
-    	int[] r2 = {x1.getX(), x1.getY(), x1.getX()*x1.getX() + x1.getY()*x1.getY()};
-    	int[] r3 = {x1.getX(), x1.getY(), x1.getX()*x1.getX() + x1.getY()*x1.getY()};
-    	int[] r4 = {x1.getX(), x1.getY(), x1.getX()*x1.getX() + x1.getY()*x1.getY()};
-    	return determinant3(r2, r3, r4)
-    			- determinant3(r1, r3, r4)
-    			+ determinant3(r1, r2, r4)
-    			- determinant3(r1, r2, r3);
+    	int[] r2 = {x2.getX(), x2.getY(), x2.getX()*x2.getX() + x2.getY()*x2.getY()};
+    	int[] r3 = {x3.getX(), x3.getY(), x3.getX()*x3.getX() + x3.getY()*x3.getY()};
+    	int[] r4 = {x4.getX(), x4.getY(), x4.getX()*x4.getX() + x4.getY()*x4.getY()};
+    	return - determinant3(r2, r3, r4)
+    			+ determinant3(r1, r3, r4)
+    			- determinant3(r1, r2, r4)
+    			+ determinant3(r1, r2, r3);
     }
     
-    private static int determinant3(int[] r1, int[]r2, int[]r3) {
+    public static int determinant3(int[] r1, int[]r2, int[]r3) {
     	 return r1[0]*((r2[1]*r3[2])-(r3[1]*r2[2]))
-    			 - r1[1]*((r1[1]*r3[2])-(r3[0]*r2[2]))
+    			 - r1[1]*((r2[0]*r3[2])-(r3[0]*r2[2]))
     			 + r1[2]*((r2[0]*r3[1])-(r2[1]*r3[0]));
     }
 

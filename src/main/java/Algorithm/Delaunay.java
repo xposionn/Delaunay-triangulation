@@ -16,6 +16,7 @@ public class Delaunay {
 
     public Delaunay(Triangular t) {
         g = new Graph(t);
+        t.getEdges().forEach(e->e.setExteral(true));
         edgesToBeChecked = new LinkedList<>();
     }
 
@@ -28,13 +29,14 @@ public class Delaunay {
         edgesToBeChecked.addAll(triangular.getEdges().stream().map(e -> new Pair<Edge, Node>(e, triangular)).collect(Collectors.toList()));
         while (!edgesToBeChecked.isEmpty()) {
         	Pair<Edge, Node> edge = edgesToBeChecked.poll();
+        	if(edge.getKey().isExteral()) continue;
             Edge newEdge = swapIfNeeded(edge.getKey());
             if (newEdge != null) {
             	Node northNode = newEdge.getNode1();
             	Node southNode = newEdge.getNode2();
-            	Node westNode = (edge.getKey().getNode1() == edge.getValue() ? edge.getKey().getNode2() : edge.getKey().getNode1());
+            	Node westNode = (edge.getKey().getNode1().equals(edge.getValue()) ? edge.getKey().getNode2() : edge.getKey().getNode1());
             	for (Edge someWestEdge : westNode.getEdges()) {
-            		if (someWestEdge == edge.getKey())
+            		if (someWestEdge.equals(edge.getKey()))
             			continue;
             		if (northNode.getEdges().contains(someWestEdge))
             			edgesToBeChecked.add(new Pair<Edge, Node>(someWestEdge, northNode));
@@ -55,14 +57,14 @@ public class Delaunay {
         List<Point> eastTraingularPoints = eastNode.getPoints();
         Point eastPoint = null;
         for (Point point : eastTraingularPoints) {
-        	if (point != northPoint && point != southPoint)
+        	if (!point.equals(northPoint) && !point.equals(southPoint))
         		eastPoint = point;
         }
         
         List<Point> westTraingularPoints = westNode.getPoints();
         Point westPoint = null;
         for (Point point : westTraingularPoints) {
-        	if (point != northPoint && point != southPoint)
+        	if (!point.equals(northPoint) && !point.equals(southPoint))
         		westPoint = point;
         }
     	if (!isInCircle(northPoint, eastPoint, southPoint, westPoint))
@@ -77,13 +79,13 @@ public class Delaunay {
     }
 
     // Check if point is in circle of the triangular with the following 3 vertices 
-    private boolean isInCircle(Point vertex1, Point vertex2, Point vertex3, Point point) {
+    public static boolean isInCircle(Point vertex1, Point vertex2, Point vertex3, Point point) {
         int detM = Handler.determinantMMatrix(vertex1, vertex2, vertex3, point);
         return (detM > 0);
     }
 
     public List<Triangular> getAllLeafs() {
-        return g.getAllLeafs().stream().map(node -> node.getTriangular()).collect(Collectors.toList());
+        return g.getAllLeafs().stream().map(Node::getTriangular).collect(Collectors.toList());
     }
 
 

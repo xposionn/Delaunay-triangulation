@@ -34,7 +34,7 @@ public class Triangular {
 
     public Edge getEdgeByTwoPoints(Point p1, Point p2) {
         for (Edge edge : edges) {
-            if ((p1 == edge.getPoint1() && p2 == edge.getPoint2()) || (p1 == edge.getPoint2() && p2 == edge.getPoint1())) {
+            if ((p1.equals(edge.getPoint1()) && p2.equals(edge.getPoint2())) || (p1.equals(edge.getPoint2()) && p2.equals(edge.getPoint1()))) {
                 return edge;
             }
         }
