@@ -1,13 +1,9 @@
 import Algorithm.Delaunay;
 import DataSheet.*;
-import Printers.DrawingCircleExample;
 import Printers.UIPrint;
 import Reader.FileLoader;
 
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class Main {
     public static void main(String[] args) {
@@ -29,10 +25,12 @@ public class Main {
         int i = 0;
         for (Point point : data1.getListOfPoints()) {
             i++;
+            System.out.println("insert point: "+point);
             delaunay.insertPoint(point);
-            if (i == 3) {
+            if(i==5){
                 break;
             }
+
 
 
 

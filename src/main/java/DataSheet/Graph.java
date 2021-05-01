@@ -15,18 +15,18 @@ public class Graph {
     	Node current = root;
     	boolean found = false;
     	while (!current.isLeaf()) {
-    		for (Node child : current.getChilds()) {
-    			if (child.isPointInside(p)) {
-    				current = child;
-    				found = true;
-    				break;
-    			}
-    		}
-    		if(!found)
-    			return null; //should happen if the point outside the external triangular
-
-			return current;
-    	}
+			for (Node child : current.getChilds()) {
+				if (child.isPointInside(p)) {
+					current = child;
+					if (current.isLeaf()) {
+						found = true;
+					}
+					break;
+				}
+			}
+		}
+		if(current!=root && !found)
+			return null; //should happen if the point outside the external triangular
         return current;
     }
 

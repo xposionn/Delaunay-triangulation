@@ -70,7 +70,7 @@ public class Edge {
     }
 
     public void replace(Node from, Node to) {
-    	if (from == getTriangular1())
+    	if (triangular1 == null ||from.equals(getTriangular1()))
     		setTriangular1(to);
     	else
     		setTriangular2(to);

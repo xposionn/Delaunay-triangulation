@@ -68,7 +68,7 @@ public class Node extends Triangular{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Node node = (Node) o;
-        return Objects.equals(childs, node.childs);
+        return Objects.equals(childs, node.childs) && super.equals(node);
     }
 
     @Override
