@@ -1,11 +1,15 @@
-package Printers;
+package main.java.Printers;
 
-import DataSheet.Edge;
-import DataSheet.Triangular;
-import Printers.DrawingBoard;
+import main.java.DataSheet.Edge;
+import main.java.DataSheet.Point;
+import main.java.DataSheet.Triangular;
+import main.java.Printers.DrawingBoard;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 import javax.swing.*;
 

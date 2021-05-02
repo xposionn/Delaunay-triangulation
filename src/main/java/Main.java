@@ -1,15 +1,21 @@
-import Algorithm.Delaunay;
-import DataSheet.*;
-import Printers.UIPrint;
-import Reader.FileLoader;
+package main.java;
 
+import main.java.Reader.FileLoader;
+
+import java.util.ArrayList;
 import java.util.List;
+
+import main.java.Algorithm.Delaunay;
+import main.java.DataSheet.DataContainer;
+import main.java.DataSheet.Point;
+import main.java.DataSheet.Triangular;
+import main.java.Printers.UIPrint;
 
 public class Main {
     public static void main(String[] args) {
-        List<String> data = FileLoader.readFile("D:\\Study\\Computational Geometry\\Delaunay-triangulation\\src\\main\\java\\examples\\input1.txt");
+        List<String> data = FileLoader.readFile("C:\\Users\\Partner\\git\\Delaunay-triangulation\\src\\main\\java\\examples\\input1.txt");
         DataContainer data1 = new DataContainer(data);
-//        data1.shuffle();
+        data1.shuffle();
 
         //First Triangular.
         Point a = new Point(0, 0);
@@ -21,14 +27,10 @@ public class Main {
         for (Point point : data1.getListOfPoints()) {
             i++;
             System.out.println("insert point: "+point);
-            delaunay.insertPoint(point);
-            if(i==2){
-                break;
+            if(i==30){
+            	i=30;
             }
-
-
-
-
+            delaunay.insertPoint(point);
         }
         UIPrint.print(delaunay.getAllLeafs());
 
