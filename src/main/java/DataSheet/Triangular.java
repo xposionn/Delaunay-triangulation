@@ -6,51 +6,132 @@ import java.util.stream.Collectors;
 
 public class Triangular {
 
-    List<Edge> edges;
+    Point a;
+    Point b;
+    Point c;
+    Triangular ab;
+    Triangular bc;
+    Triangular ca;
+    List<Triangular> childs;
 
-    public Triangular(Edge a, Edge b, Edge c) {
-        edges = new ArrayList<>();
-        edges.addAll(Arrays.asList(a, b, c));
+    public Triangular(Point a, Point b, Point c) {
+        this.a = a;
+        this.b = b;
+        this.c = c;
+        childs = new ArrayList<>();
     }
 
-    public Triangular(Triangular tr) {
-        this.edges = tr.getEdges();
+
+    public void setChilds(List<Triangular> childs) {
+        this.childs = childs;
     }
 
-
-    public List<Edge> getEdges() {
-        return edges;
+    public Edge getEdgeAb() {
+        return new Edge(a, b);
     }
 
-    public List<Point> getPoints() {
-        Set<Point> points = new HashSet<>();
-        for (Edge edge : edges) {
-            points.add(edge.getPoint1());
-            points.add(edge.getPoint2());
+    public Edge getEdgeBc() {
+        return new Edge(c, b);
+    }
+
+    public Edge getEdgeCa() {
+        return new Edge(a, c);
+    }
+
+    public Point getA() {
+        return a;
+    }
+
+    public Point getB() {
+        return b;
+    }
+
+    public Point getC() {
+        return c;
+    }
+
+    public Triangular getAb() {
+        return ab;
+    }
+
+    public Point getOppositePoint(Edge edge) {
+        if (edge.equals(getEdgeAb())) {
+            return c;
+        } else if (edge.equals(getEdgeBc())) {
+            return a;
+        } else if (edge.equals(getEdgeCa()))
+            return b;
+        else {
+            System.out.println("Error in getOppositePoint");
+            return null;
         }
 
-        return new ArrayList<>(points);
     }
 
-    public Edge getEdgeByTwoPoints(Point p1, Point p2) {
-        for (Edge edge : edges) {
-            if ((p1.equals(edge.getPoint1()) && p2.equals(edge.getPoint2())) || (p1.equals(edge.getPoint2()) && p2.equals(edge.getPoint1()))) {
-                return edge;
-            }
+    public Triangular getOtherTriangular(Edge edge) {
+        if (edge.equals(getEdgeAb())) {
+            return ab;
+        } else if (edge.equals(getEdgeBc())) {
+            return bc;
+        } else if (edge.equals(getEdgeCa()))
+            return ca;
+        else {
+            System.out.println("Error in getOtherTriangular");
+            return null;
         }
-        return null;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Triangular that = (Triangular) o;
-        return Objects.equals(edges, that.edges);
+
+    public void setAb(Triangular ab) {
+        this.ab = ab;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(edges);
+    public Triangular getBc() {
+        return bc;
+    }
+
+    public void setBc(Triangular bc) {
+        this.bc = bc;
+    }
+
+    public Triangular getCa() {
+        return ca;
+    }
+
+    public void setCa(Triangular ca) {
+        this.ca = ca;
+    }
+
+    public List<Triangular> getChilds() {
+        return childs;
+    }
+
+    public boolean isPointInside(Point pt) {
+        float d1, d2, d3;
+        boolean has_neg, has_pos;
+
+        d1 = sign(pt, a, b);
+        d2 = sign(pt, b, c);
+        d3 = sign(pt, c, a);
+
+        has_neg = (d1 < 0) || (d2 < 0) || (d3 < 0);
+        has_pos = (d1 > 0) || (d2 > 0) || (d3 > 0);
+
+        return !(has_neg && has_pos);
+    }
+
+    private float sign(Point p1, Point p2, Point p3) {
+        return (p1.x - p3.x) * (p2.y - p3.y) - (p2.x - p3.x) * (p1.y - p3.y);
+    }
+
+    public Triangular(Triangular oth) {
+        this.a = oth.a;
+        this.b = oth.b;
+        this.c = oth.c;
+        this.childs = oth.childs;
+    }
+
+    public boolean isLeaf() {
+        return childs.size() == 0;
     }
 }

@@ -5,44 +5,43 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class Graph {
-    Node root;
+    Triangular root;
 
     public Graph(Triangular root) {
-        this.root = new Node(root);
+        this.root = root;
     }
 
-    public Node findTriangular(Point p){
-    	Node current = root;
-    	boolean found = false;
-    	while (!current.isLeaf()) {
-			for (Node child : current.getChilds()) {
-				if (child.isPointInside(p)) {
-					current = child;
-					if (current.isLeaf()) {
-						found = true;
-					}
-					break;
-				}
-			}
-		}
-		if(current!=root && !found)
-			return null; //should happen if the point outside the external triangular
+    public Triangular findTriangular(Point p) {
+        Triangular current = root;
+        while (!current.isLeaf()) {
+            boolean foundChild = false;
+            for (Triangular child : current.getChilds()) {
+                if (child.isPointInside(p)) {
+                    current = child;
+                    foundChild = true;
+                    break;
+                }
+            }
+            if (!foundChild) {
+                System.out.println("Error, couldnt find child.");
+            }
+        }
         return current;
     }
 
-    public ArrayList<Node> getAllLeafs(){
-    	if (root == null)
-    		return null;
-        ArrayList<Node> leafsList = new ArrayList<>();
-        Queue<Node> queue = new LinkedList<>();
+    public ArrayList<Triangular> getAllLeafs() {
+        if (root == null)
+            return null;
+        ArrayList<Triangular> leafsList = new ArrayList<>();
+        Queue<Triangular> queue = new LinkedList<>();
         queue.add(root);
         while (!queue.isEmpty()) {
-        	Node next = queue.poll();
-        	if (next.isLeaf())
-        		leafsList.add(next);
-        	else
-        		queue.addAll(next.getChilds());
+            Triangular next = queue.poll();
+            if (next.isLeaf())
+                leafsList.add(next);
+            else
+                queue.addAll(next.getChilds());
         }
-    	return leafsList;
+        return leafsList;
     }
 }

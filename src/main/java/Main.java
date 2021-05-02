@@ -12,22 +12,17 @@ public class Main {
 //        data1.shuffle();
 
         //First Triangular.
-        Edge a = new Edge(new Point(0, 0), new Point(10000, 0));
-        Edge b = new Edge(new Point(10000, 0), new Point(5000, 8660));
-        Edge c = new Edge(new Point(5000, 8660), new Point(0, 0));
+        Point a = new Point(0, 0);
+        Point b = new Point(10000, 0);
+        Point c = new Point(5000, 8660);
         Triangular triangular = new Triangular(a, b, c);
-        Node root = new Node(triangular);
-        a.setTriangular1(root);
-        b.setTriangular1(root);
-        c.setTriangular1(root);
-
         Delaunay delaunay = new Delaunay(triangular);
         int i = 0;
         for (Point point : data1.getListOfPoints()) {
             i++;
             System.out.println("insert point: "+point);
             delaunay.insertPoint(point);
-            if(i==5){
+            if(i==2){
                 break;
             }
 

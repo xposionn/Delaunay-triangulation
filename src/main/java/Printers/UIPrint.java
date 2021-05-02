@@ -10,10 +10,7 @@ import java.util.Set;
 
 public class UIPrint {
     public static void print(List<Triangular> triangulars){
-        Set<Edge> set = new HashSet<>();
-        for(Triangular t:triangulars){
-            set.addAll(t.getEdges());
-        }
+        Set<Triangular> set = new HashSet<>(triangulars);
 
         Runnable runnable = new Runnable () {
             @Override
