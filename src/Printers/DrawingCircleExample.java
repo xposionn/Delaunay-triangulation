@@ -1,10 +1,8 @@
 package Printers;
 
-import DataSheet.Edge;
-import Printers.DrawingBoard;
+import DataSheet.Triangular;
 
 import java.awt.*;
-import java.awt.event.*;
 import java.util.Set;
 import javax.swing.*;
 
@@ -14,7 +12,7 @@ public class DrawingCircleExample {
 
     private static final int GAP = 5;
 
-    public void displayGUI(Set<Edge> edgeList) {
+    public void displayGUI(Set<Triangular> edgeList) {
         JFrame frame = new JFrame ( "" );
         frame.setDefaultCloseOperation ( JFrame.DISPOSE_ON_CLOSE );
 

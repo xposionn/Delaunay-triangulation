@@ -1,6 +1,7 @@
 package DataSheet;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class DataContainer {
@@ -14,6 +15,12 @@ public class DataContainer {
             listOfPoints.add(new Point(x,y));
         }
     }
+
+    public void shuffle(){
+        Collections.shuffle(listOfPoints);
+
+    }
+
 
     public List<Point> getListOfPoints() {
         return listOfPoints;
