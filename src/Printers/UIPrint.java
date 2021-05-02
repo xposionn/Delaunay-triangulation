@@ -1,7 +1,6 @@
-package main.java.Printers;
+package Printers;
 
-import main.java.DataSheet.Edge;
-import main.java.DataSheet.Triangular;
+import DataSheet.Triangular;
 
 import java.awt.*;
 import java.util.HashSet;

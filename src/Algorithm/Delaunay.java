@@ -1,7 +1,7 @@
-package main.java.Algorithm;
+package Algorithm;
 
-import main.java.DataSheet.*;
-import main.java.Handlers.Handler;
+import DataSheet.*;
+import Handlers.Handler;
 
 import java.util.*;
 

@@ -1,11 +1,10 @@
-package main.java.Handlers;
+package Handlers;
 
-import main.java.DataSheet.*;
+import DataSheet.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Handler {
     public static List<Triangular> getTriangularsByPoint(Triangular triangular, Point p) {

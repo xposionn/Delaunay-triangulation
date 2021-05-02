@@ -1,7 +1,7 @@
-package main.java.Printers;
+package Printers;
 
-import main.java.DataSheet.*;
-import main.java.DataSheet.Point;
+import DataSheet.*;
+import DataSheet.Point;
 
 import javax.swing.*;
 import java.awt.*;

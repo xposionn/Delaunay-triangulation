@@ -1,4 +1,4 @@
-package main.java.DataSheet;
+package DataSheet;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
