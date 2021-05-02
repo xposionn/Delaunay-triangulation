@@ -31,8 +31,7 @@ public class Delaunay {
         if(westTriangular==null)
             return;
         Point westPoint = westTriangular.getOppositePoint(edge);
-        if(isInCircle(edge.getPoint1(), eastPoint,edge.getPoint2(), westPoint) ||
-        		isInCircle(edge.getPoint1(), westPoint,edge.getPoint2(), eastPoint)) {
+        if(isInCircle(edge.getPoint1(), eastPoint,edge.getPoint2(), westPoint)) {
             Triangular northTriangular = new Triangular(westPoint, edge.getPoint1(), eastPoint);
             Triangular southTriangular = new Triangular(westPoint, edge.getPoint2(), eastPoint);
             eastTriangular.getChilds().add(northTriangular);
