@@ -106,20 +106,23 @@ public class Triangular {
     }
 
     public boolean isPointInside(Point pt) {
-        float d1, d2, d3;
-        boolean has_neg, has_pos;
+        float orient1, orient2, orient3;
+        orient1 = orient(pt, a, b);
+        orient2 = orient(pt, b, c);
+        orient3 = orient(pt, c, a);
 
-        d1 = sign(pt, a, b);
-        d2 = sign(pt, b, c);
-        d3 = sign(pt, c, a);
+        // all points are in general position, hence sign will not be 0.
+        //point is in triangule iff all the orients have the same sign.
 
-        has_neg = (d1 < 0) || (d2 < 0) || (d3 < 0);
-        has_pos = (d1 > 0) || (d2 > 0) || (d3 > 0);
-
-        return !(has_neg && has_pos);
+        if(orient1 < 0){
+            return (orient2 < 0) && (orient3 < 0);
+        }
+        else{
+            return (orient2 > 0) && (orient3 > 0);
+        } 
     }
 
-    private float sign(Point p1, Point p2, Point p3) {
+    private float orient(Point p1, Point p2, Point p3) {
         return (p1.x - p3.x) * (p2.y - p3.y) - (p2.x - p3.x) * (p1.y - p3.y);
     }
 
